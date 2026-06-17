@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Writing - Shankar Chawla</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <style>
+        html { background: #ffffff; }
         body {
             font-family: "Palatino Linotype", Palatino, Georgia, serif;
             background-color: #ffffff;
@@ -246,17 +248,16 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script>
     const posts = [
+        {
+            title: "Musings for this summer",
+            date: "2026-06-17",
+            file: "musings-for-this-summer",
+            excerpt: "",
+            type: "post"
+        }
     ];
 
-    const notes = [
-        {
-            title: "On the approximate orthogonality of uniformly distributed unit vectors in high dimensions",
-            date: "2026-05-15",
-            file: "unit-vectors-distance",
-            excerpt: "",
-            type: "note"
-        },
-    ];
+    const notes = [];
 
     const allEntries = { posts, notes };
     let activeTab = 'notes';
