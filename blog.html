@@ -9,7 +9,8 @@
     <style>
         html { background: #ffffff; }
         body {
-            font-family: "Palatino Linotype", Palatino, Georgia, serif;
+            font-family: "Computer Modern Serif", serif;
+            /* font-family: "Palatino Linotype", Palatino, Georgia, serif; */
             background-color: #ffffff;
             color: #1a1a1a;
             margin: 0;
@@ -47,35 +48,13 @@
             font-size: 16px;
         }
 
-        nav a:hover { color: #A51C30; }
-        nav a.active { color: #A51C30; }
+        nav a:hover { color: #1772d0; }
+        nav a.active { color: #1772d0; }
 
-        a { color: #A51C30; text-decoration: none; }
+        a { color: #1772d0; text-decoration: none; }
         a:hover { text-decoration: underline; }
 
         /* ── List view ── */
-        .tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 32px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            border-bottom: 2px solid transparent;
-            padding: 8px 20px 8px 0;
-            font-family: inherit;
-            font-size: 16px;
-            color: #777;
-            cursor: pointer;
-            margin-bottom: -1px;
-        }
-
-        .tab-btn:hover { color: #1a1a1a; }
-        .tab-btn.active { color: #A51C30; border-bottom-color: #A51C30; }
-
         .post-list {
             list-style-type: none;
             padding-left: 0;
@@ -114,7 +93,7 @@
 
         .back-link {
             font-size: 14px;
-            color: #A51C30;
+            color: #1772d0;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
@@ -214,23 +193,12 @@
         <a class="site-title" href="index.html">Shankar</a>
         <nav>
             <a href="index.html">Home</a>
-            <a href="research.html">Research</a>
             <a href="blog.html" class="active">Writing</a>
         </nav>
     </div>
 
     <!-- List view -->
     <div id="list-view">
-        <div class="tabs">
-            <button class="tab-btn" id="tab-posts" onclick="showTab('posts')">Posts</button>
-            <button class="tab-btn active" id="tab-notes" onclick="showTab('notes')">Notes</button>
-        </div>
-        <div id="desc-posts" class="tab-desc" style="display:none;max-width:600px;margin-bottom:28px;color:#444;font-size:15px;line-height:1.7;">
-            If I ever have a coherent thought I'll write about it here.
-        </div>
-        <div id="desc-notes" class="tab-desc" style="max-width:600px;margin-bottom:28px;color:#444;font-size:15px;line-height:1.7;">
-            Notes are for me to catalogue random thoughts that others might be interested in.
-        </div>
         <ul class="post-list" id="post-list"></ul>
     </div>
 
@@ -247,24 +215,10 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script>
-    const posts = [
-        {
-            title: "Musings for this summer",
-            date: "2026-06-17",
-            file: "musings-for-this-summer",
-            excerpt: "",
-            type: "post"
-        }
-    ];
+    const posts = [];
 
-    const notes = [];
-
-    const allEntries = { posts, notes };
-    let activeTab = 'notes';
-
-    function renderList(type) {
-        activeTab = type;
-        const list = allEntries[type].slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+    function renderList() {
+        const list = posts.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
         const postList = document.getElementById('post-list');
         postList.innerHTML = '';
 
@@ -315,18 +269,11 @@
         });
     }
 
-    function showTab(type) {
-        document.getElementById('tab-posts').classList.toggle('active', type === 'posts');
-        document.getElementById('tab-notes').classList.toggle('active', type === 'notes');
-        document.getElementById('desc-posts').style.display = type === 'posts' ? 'block' : 'none';
-        document.getElementById('desc-notes').style.display = type === 'notes' ? 'block' : 'none';
-        renderList(type);
-    }
-
     function showList() {
         document.getElementById('list-view').style.display = 'block';
         document.getElementById('post-view').style.display = 'none';
         document.title = 'Writing - Shankar Chawla';
+        renderList();
     }
 
     function openPost(file, title, date) {
@@ -385,16 +332,15 @@
     const directPost = params.get('post');
 
     if (directPost) {
-        const all = [...posts, ...notes];
-        const item = all.find(e => e.file === directPost);
+        const item = posts.find(e => e.file === directPost);
         if (item) {
-            showTab(item.type === 'note' ? 'notes' : 'posts');
+            renderList();
             openPost(item.file, item.title, item.date);
         } else {
-            showTab('notes');
+            renderList();
         }
     } else {
-        showTab('notes');
+        renderList();
     }
 </script>
 </body>
